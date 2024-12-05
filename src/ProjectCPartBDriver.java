@@ -9,7 +9,7 @@ public class ProjectCPartBDriver {
 	// set useAllReports to false if you want to read in the whole data file
 	// if use all the reports, set runComparisonC to false or else you'll be waiting a long time!
 	private static boolean useAllReports = false;
-	private static int maxNumberReports = 40000;
+	private static int maxNumberReports = 100000;
 	private static boolean runTestB = true; // should be false if useAllReports=true!
 	
 	public static void main(String[] args) throws IOException, ParseException {

@@ -83,13 +83,7 @@ public class BinarySearchTreeWithDups<T extends Comparable<? super T>> extends B
 					+ countGreaterRecursiveHelper(target, currentNode.getRightChild());
 	}
 
-	// THIS METHOD CANNOT BE RECURSIVE.
-	// Hint: use a stack!
-	// Make sure to take advantage of the sorted nature of the BST!
 	public int countGreaterIterative(T target) {
-		// YOUR CODE HERE!
-		
-		// this initial code is meant as a suggestion to get your started- use it or delete it!
 		int count = 0;
 		BinaryNode<T> currentNode = root;
 		Stack<BinaryNode<T>> nodeStack = new Stack<BinaryNode<T>>();
@@ -114,15 +108,31 @@ public class BinarySearchTreeWithDups<T extends Comparable<? super T>> extends B
 		
 		return count;
 	}
-			
-	
-	// For full credit, the method should be O(n).
-	// You are allowed to use a helper method.
-	// The method can be iterative or recursive.
-	// If you make the method recursive, you might need to comment out the call to the method in Part B.
-	public int countUniqueValues() {
-		// YOUR EXTRA CREDIT CODE HERE! 
-		return 0; // placeholder: replace with your own code
-	}
 
+	public int countUniqueValues() {
+		// borrowing iterativeInorderTraverse() from BinaryTree
+		// this will traverse the tree in ascending order, which lumps the duplicates together
+		Stack<BinaryNode<T>> nodeStack = new Stack<>();
+		BinaryNode<T> currentNode = root;
+		int count = 0;
+		T currentData = null;
+		while (!nodeStack.isEmpty() || (currentNode != null)) {
+			while (currentNode != null) {
+				nodeStack.push(currentNode);
+				currentNode = currentNode.getLeftChild();
+			}
+
+			if (!nodeStack.isEmpty()) {
+				BinaryNode<T> nextNode = nodeStack.pop();
+				// check if the new data is unique
+				if (!nextNode.getData().equals(currentData)) {
+					count++;
+					currentData = nextNode.getData();
+				}
+				currentNode = nextNode.getRightChild();
+			}
+		}
+
+		return count;
+	}
 }
